@@ -7,6 +7,8 @@ description = "Provides a number of higher-level control mechanisms for concurre
 
 readme = "README.md"
 
+repository = "https://github.com/LeoTindall/workctl"
+
 keywords = ["concurrent", "parallel", "concurrency", "parallelism", "schedule", 
     "scheduling", "flags"]
 
