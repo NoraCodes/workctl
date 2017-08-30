@@ -1,0 +1,17 @@
+[package]
+name = "workctl"
+version = "0.1.0"
+authors = ["SilverWingedSeraph <lfstindall@gmail.com>"]
+
+description = "Provides a number of higher-level control mechanisms for concurrent work scheduling, built on standard library concurrency primatives."
+
+readme = "README.md"
+
+keywords = ["concurrent", "parallel", "concurrency", "parallelism", "schedule", 
+    "scheduling", "flags"]
+
+categories = ["concurrency", "asynchronous", "data-structures",]
+
+license = "MIT"
+
+[dependencies]
