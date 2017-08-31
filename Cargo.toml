@@ -1,6 +1,6 @@
 [package]
 name = "workctl"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["SilverWingedSeraph <lfstindall@gmail.com>"]
 
 description = "Provides a number of higher-level control mechanisms for concurrent work scheduling, built on standard library concurrency primatives."
