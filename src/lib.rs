@@ -1,21 +1,26 @@
-//! `workctl` provides a set of higher-level abstractions for controlling 
+//! `workctl` provides a set of higher-level abstractions for controlling
 //! concurrent/parallel programs. These abstractions are especially focused on
-//! the "controller/worker" paradigm, in which one or a few "controller" 
-//! threads determine what work needs to be done and use `WorkQueue`s and 
+//! the "controller/worker" paradigm, in which one or a few "controller"
+//! threads determine what work needs to be done and use `WorkQueue`s and
 //! `SyncFlag`s to communicate that to many "worker" threads.
+//!
+//! `workctl` is lower level than crates like [rayon](https://crates.io/crates/rayon),
+//! but provides a more abstract interface than the primatives available in the
+//! standard library.
+//!
 //!
 //! # Examples
 //!
 //! Here is a typical example using a `WorkQueue`, a `SyncFlag`, and a `std::sync::mpsc`.
 //! This is somewhat more complex than is required for processing a list of numbers, but
 //! it illustrates the principle. When looking at this example, imagine that you might
-//! 
-//! * have a mechanism by which some of the worker threads can add new work or, 
+//!
+//! * have a mechanism by which some of the worker threads can add new work or,
 //! * that the control thread (or another thread) expects to produce work _forever_,
-//! as in a server, for instance. 
+//! as in a server, for instance.
 //!
 //! The `SyncFlag` can then be used at any future time to
-//! gracefully shut down all the worker threads, e.g. when the controller gets 
+//! gracefully shut down all the worker threads, e.g. when the controller gets
 //! `SIGTERM`.
 //!
 //! ```
@@ -46,19 +51,14 @@
 //!
 //!     let handle = thread::spawn(move || {
 //!         // Loop until the controller says to stop.
-//!         while t_more_jobs.get() {
-//!             // Try to get a piece of work to do.
-//!             if let Some(work_input) = t_queue.pull_work() {
-//!                 // Do some work. Totally contrived in this case.
-//!                 let result = work_input % 1024;
-//!                 // Send the results of the work to the main thread. 
-//!                 t_results_tx.send((work_input, result)).unwrap();
-//!             } else {
-//!                 thread::yield_now();
-//!             }
+//!         while let Some(work_input) = t_queue.wait(&t_more_jobs) {
+//!             // Do some work. Totally contrived in this case.
+//!             let result = work_input % 1024;
+//!             // Send the results of the work to the main thread.
+//!             t_results_tx.send((work_input, result)).unwrap();
 //!         }
 //!     });
-//!     
+//!
 //!     // Add the handle to the vec of handles
 //!     thread_handles.push(handle);
 //! }
@@ -85,7 +85,7 @@
 //!     results.push(r);
 //! }
 //!
-//! 
+//!
 //!
 //! // All the work is done, so tell the workers to stop looking for work.
 //! more_jobs_tx.set(false);
@@ -102,4 +102,3 @@ pub use work_queue::WorkQueue;
 
 pub mod sync_flag;
 pub use sync_flag::new_syncflag;
-

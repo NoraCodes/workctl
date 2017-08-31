@@ -13,10 +13,10 @@
 //! ```
 //! use workctl::new_syncflag;
 //! use std::thread;
-//! 
+//!
 //! // Create a new SyncFlag set to communicate with the spawned thread.
 //! let (mut tx, rx) = new_syncflag(true);
-//! 
+//!
 //! // This isn't technically needed in this case, but if we were spawning more
 //! // than one thread we'd create a clone for each.
 //! let thread_rx = rx.clone();
@@ -44,8 +44,8 @@ use std::sync::{Arc, Mutex};
 /// `SyncFlagTx` is not Clone because it should only exist in one place.
 ///
 /// # Panics
-/// The functions on this type will panic if the underlying mutex became poisoned; 
-/// that is, if there was a panic during the execution of any mutex-acquiring 
+/// The functions on this type will panic if the underlying mutex became poisoned;
+/// that is, if there was a panic during the execution of any mutex-acquiring
 /// function. This is pretty unlikely.
 pub struct SyncFlagTx {
     inner: Arc<Mutex<bool>>,
@@ -73,10 +73,9 @@ impl SyncFlagTx {
 /// `SyncFlagRx` is Clone so it can be shared across threads.
 ///
 /// # Panics
-/// The functions on this type will panic if the underlying mutex became poisoned; 
-/// that is, if there was a panic during the execution of any mutex-acquiring 
+/// The functions on this type will panic if the underlying mutex became poisoned;
+/// that is, if there was a panic during the execution of any mutex-acquiring
 /// function. This is pretty unlikely.
-
 #[derive(Clone)]
 pub struct SyncFlagRx {
     inner: Arc<Mutex<bool>>,
@@ -98,7 +97,7 @@ impl SyncFlagRx {
     }
 }
 
-/// Create a new `SyncFlagTx` and `SyncFlagRx` that can be used to share a bool 
+/// Create a new `SyncFlagTx` and `SyncFlagRx` that can be used to share a bool
 /// across a number of threads.
 pub fn new_syncflag(initial_state: bool) -> (SyncFlagTx, SyncFlagRx) {
     let state = Arc::new(Mutex::new(initial_state));
