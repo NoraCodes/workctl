@@ -5,7 +5,7 @@ use std::sync::{Mutex, Arc};
 use std::collections::VecDeque;
 use std::thread;
 
-use sync_flag::SyncFlagRx;
+use crate::sync_flag::SyncFlagRx;
 
 /// A generic work queue for any work element that is Send.
 /// This queue is symmetric, in that any thread with a copy of it can

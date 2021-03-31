@@ -1,18 +1,15 @@
 [package]
 name = "workctl"
-version = "0.1.1"
-authors = ["SilverWingedSeraph <lfstindall@gmail.com>"]
+version = "0.2.0"
+authors = ["Leonora Tindall <nora@nora.codes>"]
+edition = "2018"
 
 description = "Provides a number of higher-level control mechanisms for concurrent work scheduling, built on standard library concurrency primatives."
-
 readme = "README.md"
-
-repository = "https://github.com/LeoTindall/workctl"
-
+repository = "https://github.com/NoraCodes/workctl"
 keywords = ["concurrency", "parallelism", "schedule", "scheduling"]
-
 categories = ["concurrency", "asynchronous", "data-structures",]
-
 license = "MIT"
 
 [dependencies]
+
